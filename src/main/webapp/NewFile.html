@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Student Registration</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h2 style="text-align:center">Student Registration</h2>
+    <div class="registration-container">
+        <form action="register" method="post">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="registered-number">Registered Number</label>
+            <input type="text" id="registered-number" name="registered-number" required>
+            
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob" required>
+            
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+                <option value="" disabled selected>Select your gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            
+            <label for="branch">Branch</label>
+            <input type="text" id="branch" name="branch" required>
+            
+            <label for="year">Year</label>
+            <input type="number" id="year" name="year" min="1" max="4" required>
+            
+            <label for="semester">Semester</label>
+            <input type="number" id="semester" name="semester" min="1" max="8" required>
+            
+            <label for="college-name">College Name</label>
+            <input type="text" id="college-name" name="college-name" required>
+            
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>
