@@ -1,37 +1,81 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.model.Student" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <html>
 <head>
     <title>Student List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        form {
+            display: inline-block;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            margin: 4px 2px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        input[type="submit"].delete {
+            background-color: #ff4d4d;
+        }
+
+        input[type="submit"].edit {
+            background-color: #008CBA;
+        }
+
+        input[type="submit"]:hover {
+            opacity: 0.8;
+        }
+    </style>
 </head>
 <body>
-
     <h2>Student List</h2>
 
+
+
     <%
-    // Retrieve the 'students' object from the request
-    Object obj = request.getAttribute("students");
     
-    // Check if the attribute 'students' exists and is not null
-    if (obj == null) {
-    %>
-        <p>No 'students' attribute found in the request. Unable to display the list.</p>
-    <%
-    } else {
-        // Cast the object to List<Student>
-        List<Student> students = (List<Student>) obj;
-        
-        // Check if the list is empty
-        if (students.isEmpty()) {
+    List<Student> students = (List<Student>) request.getAttribute("students");
+
+
+    if (students == null || students.isEmpty()) {
     %>
         <p>No students available to display!</p>
     <%
-        } else {
+    } else {
     %>
-    
-    <table border="1">
+
+    <table>
         <tr>
             <th>Name</th>
             <th>Registered Number</th>
@@ -41,9 +85,9 @@
             <th>Year</th>
             <th>Semester</th>
             <th>College Name</th>
+            <th>Actions</th>
         </tr>
         <%
-            // Loop through each student in the list and display their information
             for (Student student : students) {
         %>
         <tr>
@@ -55,15 +99,29 @@
             <td><%= student.getYear() %></td>
             <td><%= student.getSemester() %></td>
             <td><%= student.getCollegeName() %></td>
+            <td>
+                <!-- Edit button -->
+                <form action="Display" method="GET">
+                    <input type="hidden" name="action" value="edit" />
+                    <input type="hidden" name="registeredNumber" value="<%= student.getRegisteredNumber() %>" />
+                    <input type="submit" class="edit" value="Edit" name="edit" />
+                </form>
+
+                <!-- Delete button -->
+                <form action="Display" method="POST" onsubmit="return confirm('Are you sure you want to delete this student?');">
+                    <input type="hidden" name="action" value="delete" />
+                    <input type="hidden" name="registeredNumber" value="<%= student.getRegisteredNumber() %>" />
+                    <input type="submit" class="delete" value="Delete" />
+                </form>
+            </td>
         </tr>
         <%
-            } // End of for loop
+            }
         %>
     </table>
-    
+
     <%
-        } // End of empty check
-    } // End of null check
+    }
     %>
 
 </body>
